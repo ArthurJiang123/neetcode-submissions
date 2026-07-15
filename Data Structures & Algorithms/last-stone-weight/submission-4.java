@@ -1,0 +1,32 @@
+class Solution {
+    /*
+        maxHeap: Largest -> Smallest
+        1. queue the stones to the queue
+        2. every time poll 2 largest stones to compare
+        3. terminate until size < 1
+    */
+    private PriorityQueue<Integer> maxHeap;
+
+    public int lastStoneWeight(int[] stones) {
+        maxHeap = new PriorityQueue<>
+                (stones.length,
+                Collections.reverseOrder());
+        
+
+        for(int stone: stones) maxHeap.offer(stone);
+
+        int result = 0;
+
+        while(maxHeap.size() > 1){
+            int max = maxHeap.poll();
+            int max2 = maxHeap.poll();
+            if (max == max2) continue;
+            maxHeap.offer(max-max2);
+        }
+        if(maxHeap.size() > 0){
+            result = maxHeap.peek();
+        }
+
+        return result;
+    }
+}
